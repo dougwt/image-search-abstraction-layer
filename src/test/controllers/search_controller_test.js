@@ -7,7 +7,7 @@ const Search = mongoose.model('search');
 
 describe('Search controller', () => {
 
-  it('GET to /search/:query with a query returns results containing image urls', (done) => {
+  xit('GET to /search/:query with a query returns results containing image urls', (done) => {
     const query = 'beach';
     request(app)
       .get(`/search/${query}`)
