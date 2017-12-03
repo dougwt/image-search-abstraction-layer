@@ -88,7 +88,7 @@ describe('Search controller', () => {
       });
   });
 
-  xit('GET to /search/:query inserts a document in the collection', (done) => {
+  it('GET to /search/:query inserts a document in the collection with a timestamp', (done) => {
     Search.count().then((count) => {
       const query = 'beach';
       request(app)
@@ -96,7 +96,10 @@ describe('Search controller', () => {
         .end(() => {
           Search.count().then((newCount) => {
             assert(newCount === count + 1);
-            done();
+            Search.findOne().sort({ timestamp: -1}).then((record) => {
+              assert(record.timestamp);
+              done();
+            });
           });
         });
       });

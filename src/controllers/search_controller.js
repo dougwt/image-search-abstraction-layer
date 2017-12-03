@@ -20,7 +20,14 @@ module.exports = {
     GoogleController.search(query, offset)
       .then(result => {
         // console.log('RESULT:', result);
+
         // Store query in local database
+        Search.create({  query })
+          .then(record => console.log(`Query '${query}' inserted into database`))
+          .catch((error) => {
+            console.log('ERROR:', error);
+            next();
+          });
 
         // Format response
         let results;

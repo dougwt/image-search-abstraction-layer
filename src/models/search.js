@@ -5,8 +5,12 @@ const SearchSchema = new Schema({
   query: {
     type: String,
     lowercase: true,
-    unique: true,
+    unique: false,
     required: true
+  },
+  timestamp: {
+    type : Date,
+    default: Date.now
   }
 });
 
