@@ -7,18 +7,18 @@ const Search = mongoose.model('search');
 
 describe('Search controller', () => {
 
-  xit('GET to /search/:query with a query returns results containing image urls', (done) => {
+  it('GET to /search/:query with a query returns results containing image urls', (done) => {
     const query = 'beach';
     request(app)
       .get(`/search/${query}`)
       .end((err, response) => {
         assert(response.body.length > 0);
-        assert(response.body[0].url.startsWith('https://images.unsplash.com/'));
+        assert(response.body[0].url.startsWith('http'));
         done();
       });
   });
 
-  xit('GET to /search/:query with a query returns results containing alt text', (done) => {
+  it('GET to /search/:query with a query returns results containing alt text', (done) => {
     const query = 'beach';
     request(app)
       .get(`/search/${query}`)
@@ -29,18 +29,18 @@ describe('Search controller', () => {
       });
   });
 
-  xit('GET to /search/:query with a query returns results containing page urls', (done) => {
+  it('GET to /search/:query with a query returns results containing page urls', (done) => {
     const query = 'beach';
     request(app)
       .get(`/search/${query}`)
       .end((err, response) => {
         assert(response.body.length > 0);
-        assert(response.body[0].page.startsWith('http://unsplash.com/photos/'));
+        assert(response.body[0].page.startsWith('http'));
         done();
       });
   });
 
-  xit('GET to /search/:query with an empty query string returns an error', (done) => {
+  it('GET to /search/:query with an empty query string returns an error', (done) => {
     const query = '';
     request(app)
       .get(`/search/${query}`)
@@ -52,7 +52,7 @@ describe('Search controller', () => {
       });
   });
 
-  xit('GET to /search/:query with an obscure query string returns an empty result set', (done) => {
+  it('GET to /search/:query with an obscure query string returns an empty result set', (done) => {
     const query = 'jlfalsjdalsjdalksjflkajjlfalsjdalsjdalksjflkaj';
     request(app)
       .get(`/search/${query}`)
@@ -62,7 +62,7 @@ describe('Search controller', () => {
       });
   });
 
-  xit('GET to /search/:query with a popular query string returns a result set containing 10 items', (done) => {
+  it('GET to /search/:query with a popular query string returns a result set containing 10 items', (done) => {
     const query = 'beach';
     request(app)
       .get(`/search/${query}`)
@@ -72,13 +72,19 @@ describe('Search controller', () => {
       });
   });
 
-  xit('GET to /search/:query with a popular query string and an offset returns additional results', (done) => {
+  it('GET to /search/:query with a popular query string and an offset returns additional results', (done) => {
     const query = 'beach';
     request(app)
-      .get(`/search/${query}/offset=10`)
-      .end((err, response) => {
-        assert(response.body.length > 0);
-        done();
+      .get(`/search/${query}`)
+      .end((err, response1) => {
+        assert(response1.body.length > 0);
+        request(app)
+          .get(`/search/${query}?offset=10`)
+          .end((err, response2) => {
+            assert(response2.body.length > 0);
+            assert(response1.body !== response2.body);
+            done();
+          });
       });
   });
 

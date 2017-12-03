@@ -7,9 +7,8 @@ const GOOGLE_API_KEY = require('../config').GOOGLE_API_KEY;
 const GoogleController = {
   search: function(query, skip=0) {
     if (!GOOGLE_ENGINE_ID || !GOOGLE_API_KEY) {
-      throw 'Invalid Google API credentials';
+      throw new Error('Invalid Google API credentials');
     }
-
     if(!query) {
       throw new Error('Invalid query');
     }
@@ -17,9 +16,13 @@ const GoogleController = {
       throw new Error('Invalid skip value');
     }
 
+    const start = Number(skip) + 1;
+    // console.log('query:', query);
+    // console.log('start:', start);
+
     return new Promise((resolve, reject) => {
       superagent
-        .get(`https://www.googleapis.com/customsearch/v1?cx=${GOOGLE_ENGINE_ID}&searchType=image&key=${GOOGLE_API_KEY}&q=${query}&start=${skip + 1}`)
+        .get(`https://www.googleapis.com/customsearch/v1?cx=${GOOGLE_ENGINE_ID}&searchType=image&key=${GOOGLE_API_KEY}&q=${query}&start=${start}`)
         .end((err, response) => {
           if (err) {
             reject(err);

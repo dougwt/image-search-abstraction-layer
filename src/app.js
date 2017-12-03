@@ -19,7 +19,7 @@ mongoose.Promise = global.Promise;
 // });
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.get('/search/:query', SearchController.search);
+app.get('/search/*', SearchController.search);
 // app.get('/latest', SearchController.latest);
 
 module.exports = app;
