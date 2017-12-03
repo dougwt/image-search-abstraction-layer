@@ -105,24 +105,32 @@ describe('Search controller', () => {
       });
   });
 
-  xit('GET to /latest returns a list of the most recent search queries', (done) => {
+  it('GET to /latest returns a list of the most recent search queries', (done) => {
     Search.count().then((count) => {
-      const query = 'beach';
+      const query1 = 'beach';
       request(app)
-        .get(`/search/${query}`)
+        .get(`/search/${query1}`)
         .end(() => {
+          const query2 = 'popcorn';
           request(app)
-            .get(`/latest`)
-            .end((err, response) => {
-              assert(response.body.length > 0);
-              assert(response.body[0] === 'beach');
-              done();
+            .get(`/search/${query2}`)
+            .end(() => {
+              request(app)
+                .get(`/latest`)
+                .end((err, response) => {
+                  assert(response.body.length > 0);
+                  assert(response.body[0].query === 'popcorn');
+                  assert(response.body[0].timestamp);
+                  assert(response.body[1].query === 'beach');
+                  assert(response.body[1].timestamp);
+                  done();
+                });
             });
         });
     });
   });
 
-  xit('GET to /latest returns an empty list of the search queries when none have been submitted', (done) => {
+  it('GET to /latest returns an empty list of the search queries when none have been submitted', (done) => {
     request(app)
       .get(`/latest`)
       .end((err, response) => {

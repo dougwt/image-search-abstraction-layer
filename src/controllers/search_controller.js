@@ -2,7 +2,6 @@ const Search = require('../models/search');
 const GoogleController = require('./google_controller');
 
 module.exports = {
-
   search(req, res, next) {
     const query = decodeURIComponent(req.params[0]);
     const offset = req.query.offset || 0;
@@ -23,7 +22,9 @@ module.exports = {
 
         // Store query in local database
         Search.create({  query })
-          .then(record => console.log(`Query '${query}' inserted into database`))
+          .then(record => {
+            // console.log(`Query '${query}' inserted into database`)
+          })
           .catch((error) => {
             console.log('ERROR:', error);
             next();
@@ -44,6 +45,29 @@ module.exports = {
         }
         res.send(results);
       });
-  }
+  },
 
+  latest(req, res, next) {
+    // Retrieve query records from local database
+    Search.find().sort({ timestamp: -1}).limit(10)
+      .then(records => {
+        let results;
+        if (records) {
+          // Format response
+          results = records.map((item) => {
+            return {
+              query: item.query,
+              timestamp: item.timestamp
+            }
+          });
+        } else {
+          results = [];
+        }
+        res.send(results);
+      })
+      .catch((error) => {
+        console.log('ERROR:', error);
+        next();
+      });
+  }
 };
