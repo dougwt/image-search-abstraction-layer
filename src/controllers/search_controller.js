@@ -44,6 +44,14 @@ module.exports = {
           results = [];
         }
         res.send(results);
+      })
+      .catch((error) => {
+        console.log('ERROR:', error);
+        res.status(400).json({
+          error: 400,
+          message: 'Invalid query parameter'
+        });
+        next();
       });
   },
 

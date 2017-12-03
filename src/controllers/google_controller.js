@@ -24,10 +24,12 @@ const GoogleController = {
       superagent
         .get(`https://www.googleapis.com/customsearch/v1?cx=${GOOGLE_ENGINE_ID}&searchType=image&key=${GOOGLE_API_KEY}&q=${query}&start=${start}`)
         .end((err, response) => {
-          if (err) {
+          if (err || response.body.error) {
             reject(err);
+            return;
           }
           // console.log('RESPONSE:', response.body);
+
           resolve({
             searchTerms: response.body.queries.request[0].searchTerms,
             startIndex: response.body.queries.request[0].startIndex,

@@ -5,12 +5,12 @@ const SearchController = require('./controllers/search_controller');
 const app = express();
 
 mongoose.Promise = global.Promise;
-// if (process.env.NODE_ENV !== 'test') {
-//   const MONGO_CONNECTION = process.env.MONGO_CONNECTION || 'mongodb://localhost/image_search';
-//   mongoose.connect(MONGO_CONNECTION, { useMongoClient: true }, (error) => {
-//     if (error) throw error;
-//   });
-// }
+if (process.env.NODE_ENV !== 'test') {
+  const MONGO_CONNECTION = process.env.MONGO_CONNECTION || 'mongodb://localhost/image_search';
+  mongoose.connect(MONGO_CONNECTION, { useMongoClient: true }, (error) => {
+    if (error) throw error;
+  });
+}
 
 // Middleware
 // app.use(function(req, res, next) {
