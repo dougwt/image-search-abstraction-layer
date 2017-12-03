@@ -1,8 +1,8 @@
 var superagent = require('superagent');
 require('superagent-cache')(superagent);
 
-const GOOGLE_ENGINE_ID = require('../config').GOOGLE_ENGINE_ID;
-const GOOGLE_API_KEY = require('../config').GOOGLE_API_KEY;
+const GOOGLE_ENGINE_ID = process.env.GOOGLE_ENGINE_ID;
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
 const GoogleController = {
   search: function(query, skip=0) {
