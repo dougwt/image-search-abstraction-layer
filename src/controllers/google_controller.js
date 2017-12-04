@@ -1,6 +1,7 @@
 var superagent = require('superagent');
 require('superagent-cache')(superagent);
 
+require('dotenv').config();
 const GOOGLE_ENGINE_ID = process.env.GOOGLE_ENGINE_ID;
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
