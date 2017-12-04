@@ -7,38 +7,126 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300" rel="stylesheet">
   <link href="style.css" type="text/css" rel="stylesheet" />
-  <title>URL Shortener microservice</title>
+  <title>Image Search Abstraction Layer</title>
 </head>
 
 <body>
-  <h1>URL Shortener microservice</h1>
+  <h1>Image Search Abstraction Layer</h1>
 
   <h2>User stories:</h2>
   <ol>
-    <li>I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.</li>
-    <li>If I pass an invalid URL that doesn't follow the valid http://www.example.com format, the JSON response will contain an error instead.</li>
-    <li>When I visit that shortened URL, it will redirect me to my original link.</li>
+    <li>I can get the image URLs, alt text and page urls for a set of images relating to a given search string.</li>
+    <li>I can paginate through the responses by adding a ?offset=2 parameter to the URL.</li>
+    <li>I can get a list of the most recently submitted search strings.</li>
   </ol>
 
-  <h2>Example creation usage:</h2>
+  <h2>Example usage:</h2>
   <ul class="examples">
-    <li><pre>https://link.mycodebytes.com/new/https://www.google.com</pre></li>
-    <li><pre>https://link.mycodebytes.com/new/http://foo.com:80</pre></li>
+    <li><pre>https://image-search.mycodebytes.com/search/lolcats</pre></li>
+    <li><pre>https://image-search.mycodebytes.com/search/lolcats%20funny?offset=10</pre></li>
+    <li><pre>https://image-search.mycodebytes.com/latest</pre></li>
   </ul>
 
-  <h2>Example creation output:</h2>
+  <h2>Example search output:</h2>
   <ul class="examples">
-    <li><pre>{ "original_url":"http://foo.com:80", "short_url":"https://link.mycodebytes.com/8170" }</pre></li>
+    <li><pre>[
+    {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Cat_crying_%28Lolcat%29.jpg",
+        "text": "Lolcat - Wikipedia",
+        "page": "https://en.wikipedia.org/wiki/Lolcat"
+    },
+    {
+        "url": "http://i0.kym-cdn.com/photos/images/facebook/000/748/290/ee7",
+        "text": "LOLcats | Know Your Meme",
+        "page": "http://knowyourmeme.com/memes/lolcats"
+    },
+    {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Lolcat_in_folder.jpg",
+        "text": "Lolcat - Wikipedia",
+        "page": "https://en.wikipedia.org/wiki/Lolcat"
+    },
+    {
+        "url": "http://i0.kym-cdn.com/photos/images/facebook/000/559/061/d94.png",
+        "text": "LOLcats | Know Your Meme",
+        "page": "http://knowyourmeme.com/memes/lolcats"
+    },
+    {
+        "url": "http://www.motifake.com/image/demotivational-poster/1008/yes-lolcats-fail-demotivational-poster-1280943063.jpg",
+        "text": "demotivational poster YES, and its name is lolcats.",
+        "page": "http://www.motifake.com/yes-lolcats-fail-demotivational-posters-112503.html"
+    },
+    {
+        "url": "http://i0.kym-cdn.com/photos/images/facebook/001/031/948/10b.jpg",
+        "text": "LOLcats: Image Gallery | Know Your Meme",
+        "page": "http://knowyourmeme.com/memes/lolcats/photos"
+    },
+    {
+        "url": "https://journals.uic.edu/ojs/index.php/fm/article/viewFile/5391/4103/40381",
+        "text": "There's no place for lulz on LOLCats”: The role of genre, gender ...",
+        "page": "https://journals.uic.edu/ojs/index.php/fm/article/view/5391/4103"
+    },
+    {
+        "url": "http://i0.kym-cdn.com/photos/images/masonry/000/871/688/727.png",
+        "text": "LOLcats | Know Your Meme",
+        "page": "http://knowyourmeme.com/memes/lolcats"
+    },
+    {
+        "url": "https://pics.me.me/regret-nothing-nothing-fat-cat-2729093.png",
+        "text": "Regret Nothing Nothing Fat Cat | Cats Meme on me.me",
+        "page": "https://me.me/i/regret-nothing-nothing-fat-cat-1969205"
+    },
+    {
+        "url": "http://i0.kym-cdn.com/photos/images/original/001/284/242/202.jpg",
+        "text": "LOLcats | Know Your Meme",
+        "page": "http://knowyourmeme.com/photos/1284242-lolcats"
+    }
+]</pre></li>
   </ul>
 
-  <h2>Usage:</h2>
+  <h2>Example latest output:</h2>
   <ul class="examples">
-    <li><pre>https://link.mycodebytes.com/2871</pre></li>
-  </ul>
-
-  <h2>Will redirect to:</h2>
-  <ul class="examples">
-    <li><pre>https://www.google.com/</pre></li>
+    <li><pre>[
+    {
+        "query": "lolcats",
+        "timestamp": "2017-12-04T00:45:18.654Z"
+    },
+    {
+        "query": "turtles",
+        "timestamp": "2017-12-04T00:45:03.661Z"
+    },
+    {
+        "query": "cute dogs",
+        "timestamp": "2017-12-04T00:44:49.003Z"
+    },
+    {
+        "query": "pizza",
+        "timestamp": "2017-12-04T00:43:52.555Z"
+    },
+    {
+        "query": "lolcats",
+        "timestamp": "2017-12-04T00:41:44.591Z"
+    },
+    {
+        "query": "popcorn",
+        "timestamp": "2017-12-04T00:41:38.022Z"
+    },
+    {
+        "query": "lolcats funny",
+        "timestamp": "2017-12-04T00:36:51.914Z"
+    },
+    {
+        "query": "popcorn",
+        "timestamp": "2017-12-04T00:36:36.768Z"
+    },
+    {
+        "query": "popcorn",
+        "timestamp": "2017-12-04T00:27:32.301Z"
+    },
+    {
+        "query": "javascript",
+        "timestamp": "2017-12-03T07:16:22.744Z"
+    }
+]</pre></li>
   </ul>
 </body>
 

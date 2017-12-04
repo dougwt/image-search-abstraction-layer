@@ -9,7 +9,7 @@ describe('The express app', () => {
       .get('/')
       .end((err, response) => {
         assert(response.statusCode === 200);
-        assert(response.text.includes('Example creation usage:'));
+        assert(response.text.includes('Example usage:'));
         done();
       });
   });
@@ -19,7 +19,7 @@ describe('The express app', () => {
       .get('/index.html')
       .end((err, response) => {
         assert(response.statusCode === 200);
-        assert(response.text.includes('Example creation usage:'));
+        assert(response.text.includes('Example usage:'));
         done();
       });
   });
