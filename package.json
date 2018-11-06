@@ -12,14 +12,21 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^4.0.0",
-    "express": "^4.16.2",
-    "mongoose": "^4.13.5",
-    "superagent": "^3.8.1",
+    "express": "^4.16.4",
+    "mongoose": "^4.13.17",
+    "superagent": "^3.8.3",
     "superagent-cache": "^2.0.0"
   },
   "devDependencies": {
-    "mocha": "^4.0.0",
-    "nodemon": "^1.12.1",
-    "supertest": "^3.0.0"
+    "mocha": "^4.1.0",
+    "nodemon": "^1.18.6",
+    "supertest": "^3.3.0"
+  },
+  "now": {
+    "env": {
+      "MONGO_CONNECTION": "@image-search-mongo-connection",
+      "GOOGLE_API_KEY": "@image-search-google-api-key",
+      "GOOGLE_ENGINE_ID": "@image-search-google-engine-id"
+    }
   }
 }
