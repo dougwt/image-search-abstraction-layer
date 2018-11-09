@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "alias": ["header-parser.mycodebytes.com"],
+  "env": {
+    "MONGO_CONNECTION": "@image-search-mongo-connection",
+    "GOOGLE_API_KEY": "@image-search-google-api-key",
+    "GOOGLE_ENGINE_ID": "@image-search-google-engine-id"
+  }
+}
